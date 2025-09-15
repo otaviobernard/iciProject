@@ -1,0 +1,14 @@
+1) No MVC, o que podemos fazer para enviar uma coleção de dados da classe Controller para a View?
+Podemos enviar de várias formas: passando a coleção como model usando return View(lista) ou então via ViewBag/ViewData para dados mais simples (como usei no projeto o ViewBag). 
+O mais recomendado é trabalhar com models ou view models para manter o código organizado e tipado.
+
+2) Precisamos validar os dados obrigatórios de um formulário para que não gere exceção no momento de armazenar na fonte de dados. Como podemos fazer isso?
+Utilizamos Data Annotations no modelo, como [Required], [StringLength], [EmailAddress], etc. O MVC usa isso para validar tanto no server side quanto no client side. 
+Além disso, no Controller conferimos ModelState.IsValid antes de salvar no banco. Se não for válido, retornamos a View com as mensagens de erro.
+Usei todas essas notattions no projeto para garantir a validação dos dados. tambem usei outras como [ValidateNever] e [EmailAddress] para validacao de informações
+
+3) Como podemos armazenar configurações (connectionString, urls de apis, chaves de acesso) da aplicação que variam de acordo com o ambiente (debug, desenv, prod) que será publicado a aplicação?
+Usamos o appsettings.json e suas variações por ambiente, como appsettings.Development.json, appsettings.Production.json, etc. 
+O .NET Core carrega automaticamente o arquivo de acordo com o ambiente configurado. Para dados sensíveis, podemos usar User Secrets em desenvolvimento e variáveis de ambiente ou Azure Key Vault em produção.
+No projeto usei o appsettings.json para armazenar a connection string do banco de dados e outras configuracoes da aplicacao para ambiente de desenvolvimento, porem em producao o ideal seria usar variaveis de ambiente ou um cofre de segredos como o Azure Key Vault.
+Tambem tem o Secrets para senhas, mas nao usei no projeto pelo fato de ser um projeto simples.

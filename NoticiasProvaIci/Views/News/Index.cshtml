@@ -1,0 +1,56 @@
+@model IEnumerable<NoticiasProvaIci.Models.News>
+
+@{
+ViewData["Title"] = "Notícias";
+}
+
+<h2>Notícias</h2>
+
+<p>
+    <a class="btn btn-success" asp-action="Create">Nova Notícia</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Título</th>
+        <th>Conteúdo</th>
+        <th>Tags</th>
+        <th>Usuário</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Any())
+    {
+    <tr>
+        <td colspan="5" class="text-center">Nenhuma notícia cadastrada.</td>
+    </tr>
+    }
+    else
+    {
+    foreach (var news in Model)
+    {
+    <tr>
+        <td>@news.Title</td>
+        <td>@news.Content</td>
+        <td>@string.Join(", ", news.NewsTag.Select(nt => nt.Tag.Name))</td>
+        <td>@news.User?.Name</td>
+        <td>
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@news.Id">Editar</a>
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@news.Id"
+               onclick="return confirm('Deseja realmente excluir esta notícia?');">Excluir</a>
+        </td>
+    </tr>
+    }
+    }
+    </tbody>
+</table>
+
+@if (TempData["PopupMessage"] != null)
+{
+    <script>
+        alert("@TempData["PopupMessage"]");
+        window.location.href = '@Url.Action("Index", "News")';
+    </script>
+}

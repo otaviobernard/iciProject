@@ -1,0 +1,40 @@
+@model IEnumerable<NoticiasProvaIci.Models.Tag>
+
+@{
+    ViewData["Title"] = "Tags";
+}
+
+<h2>Tags</h2>
+
+<a class="btn btn-success mb-3" href="@Url.Action("Create", "Tag")">Nova Tag</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Ações</th>
+    </tr>   
+    </thead>
+    <tbody>
+    @if (Model != null && Model.Any())
+    {
+        foreach (var tag in Model)
+        {
+            <tr>
+                <td>@tag.Name</td>
+                <td>
+                    <a class="btn btn-primary" href="@Url.Action("Edit", "Tag", new { id = tag.Id })">Editar</a>
+                    <a class="btn btn-danger" href="@Url.Action("Delete", "Tag", new { id = tag.Id })" 
+                       onclick="return confirm('Deseja realmente excluir esta tag?');">Excluir</a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="2" class="text-center">Nenhuma tag cadastrada.</td>
+        </tr>
+    }
+    </tbody>
+</table>

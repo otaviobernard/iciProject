@@ -1,0 +1,43 @@
+@model IEnumerable<NoticiasProvaIci.Models.User>
+
+@{
+    ViewData["Title"] = "Usuários";
+}
+    
+<h2>Usuários</h2>
+
+    <a class="btn btn-success mb-3" href="@Url.Action("Create", "User")">Novo Usuário</a>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        
+        @if (Model != null && Model.Any())
+        {
+            foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <a class="btn btn-primary" href="@Url.Action("Edit", "User", new { id = user.Id })">Editar</a>
+                        <a class="btn btn-danger" href="@Url.Action("Delete", "User", new { id = user.Id })"
+                           onclick="return confirm('Deseja realmente excluir este usuário?');">Excluir</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" class="text-center">Nenhum usuário cadastrado.</td>
+            </tr>
+        }
+        </tbody>
+        </table>
